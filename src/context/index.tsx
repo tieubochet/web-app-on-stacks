@@ -4,13 +4,14 @@ import { bitcoinAdapter, projectId, networks, stacks } from '@/config'
 import { createAppKit } from '@reown/appkit/react'
 import React, { type ReactNode } from 'react'
 
-if (!projectId) throw new Error('Project ID is not defined')
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
 
-// MẸO QUAN TRỌNG: Đổi tên 'name' khác với tên cũ để Ví Leather không báo lỗi "Already linked"
 const metadata = {
-  name: 'Talent Stacks App V2', // <--- Đổi tên ở đây (Thêm V2, V3...)
-  description: 'Stacks Integration',
-  url: 'https://example.com', 
+  name: 'Web App on Stacks', 
+  description: 'Reown AppKit integration with Stacks Network',
+  url: 'https://web-app-on-stacks.vercel.app/', 
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
 
@@ -18,9 +19,11 @@ createAppKit({
   adapters: [bitcoinAdapter],
   projectId,
   networks,
-  defaultNetwork: stacks, // Ép mặc định là Stacks
+  defaultNetwork: stacks, 
   metadata,
-  features: { analytics: true }
+  features: {
+    analytics: true
+  }
 })
 
 function ContextProvider({ children }: { children: ReactNode }) {
