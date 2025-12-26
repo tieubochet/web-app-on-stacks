@@ -1,6 +1,6 @@
 // src/config/index.tsx
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-// Bỏ import { bitcoin }
+// Đảm bảo KHÔNG import { bitcoin } từ thư viện networks
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
 export const stacks: AppKitNetwork = {
@@ -12,18 +12,13 @@ export const stacks: AppKitNetwork = {
   explorerUrl: 'https://explorer.hiro.so',
   rpcUrl: 'https://stacks-node-api.mainnet.stacks.co',
   chainNamespace: 'stacks',
-  nativeCurrency: {
-    name: 'Stacks',
-    symbol: 'STX',
-    decimals: 6,
-  },
+  nativeCurrency: { name: 'Stacks', symbol: 'STX', decimals: 6 },
 }
 
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-if (!projectId) throw new Error('Project ID is not defined')
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || 'your-id'
 
-// CHỈ ĐỂ MỖI STACKS Ở ĐÂY
-export const networks = [stacks] 
+// CHỈ CÓ STACKS
+export const networks = [stacks]
 
 export const bitcoinAdapter = new BitcoinAdapter({
   projectId,
