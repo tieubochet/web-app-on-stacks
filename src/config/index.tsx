@@ -1,8 +1,8 @@
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-// QUAN TRỌNG: Phải import cả bitcoin
+// Import cả 2 mạng
 import { bitcoin, type AppKitNetwork } from '@reown/appkit/networks'
 
-// Định nghĩa mạng Stacks
+// Định nghĩa mạng Stacks Mainnet
 export const stacks: AppKitNetwork = {
   id: 'stacks:1',
   chainId: '1',
@@ -20,11 +20,9 @@ export const stacks: AppKitNetwork = {
 }
 
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-if (!projectId) {
-  throw new Error('Project ID is not defined')
-}
+if (!projectId) throw new Error('Project ID is not defined')
 
-// QUAN TRỌNG: Để stacks đứng trước, nhưng PHẢI CÓ bitcoin đi kèm
+// MẢNG NETWORKS: Đặt stacks ĐỨNG TRƯỚC bitcoin
 export const networks = [stacks, bitcoin]
 
 export const bitcoinAdapter = new BitcoinAdapter({
