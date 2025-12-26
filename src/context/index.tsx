@@ -1,6 +1,6 @@
 'use client'
 
-import { bitcoinAdapter, projectId, networks } from '@/config'
+import { bitcoinAdapter, projectId, networks, stacks } from '@/config'
 import { createAppKit } from '@reown/appkit/react'
 import React, { type ReactNode } from 'react'
 
@@ -9,18 +9,17 @@ if (!projectId) {
 }
 
 const metadata = {
-  name: 'Talent Challenge Stacks',
-  description: 'AppKit Stacks Integration',
+  name: 'Talent Challenge',
+  description: 'Stacks Integration',
   url: 'https://example.com', 
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
 
-// Khởi tạo AppKit
 createAppKit({
   adapters: [bitcoinAdapter],
   projectId,
-  networks, // Danh sách này giờ chỉ chứa Stacks
-  defaultNetwork: networks[0], // Mặc định chọn Stacks
+  networks,
+  defaultNetwork: stacks, // QUAN TRỌNG: Ép buộc mặc định là Stacks
   metadata,
   features: {
     analytics: true

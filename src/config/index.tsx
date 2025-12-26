@@ -1,16 +1,17 @@
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-import { type AppKitNetwork } from '@reown/appkit/networks'
+import { bitcoin } from '@reown/appkit/networks' // Import mạng bitcoin có sẵn
+import type { AppKitNetwork } from '@reown/appkit/networks'
 
-// Định nghĩa mạng Stacks Mainnet chuẩn
+// Định nghĩa Stacks thủ công
 export const stacks: AppKitNetwork = {
-  id: 'stacks:1', // ID chuẩn CAIP cho Stacks
+  id: 'stacks:1',
   chainId: '1',
   caipNetworkId: 'stacks:1',
   name: 'Stacks',
   currency: 'STX',
   explorerUrl: 'https://explorer.hiro.so',
   rpcUrl: 'https://stacks-node-api.mainnet.stacks.co',
-  chainNamespace: 'stacks', // Quan trọng: báo cho Adapter biết đây là Stacks
+  chainNamespace: 'stacks',
   nativeCurrency: {
     name: 'Stacks',
     symbol: 'STX',
@@ -18,14 +19,13 @@ export const stacks: AppKitNetwork = {
   },
 }
 
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || 'b56e18d47c72ab683b6a6c0f8980e579'
-
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-// Chỉ để Stacks vào đây để AppKit không bị nhầm sang Bitcoin
-export const networks = [stacks]
+// FIX: Thêm 'bitcoin' vào đây để Adapter khởi tạo đúng kênh kết nối với Leather
+export const networks = [stacks, bitcoin]
 
 export const bitcoinAdapter = new BitcoinAdapter({
   projectId,
