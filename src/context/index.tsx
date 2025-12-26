@@ -19,7 +19,7 @@ createAppKit({
   adapters: [bitcoinAdapter],
   projectId,
   networks,
-  defaultNetwork: stacks, // QUAN TRỌNG: Ép buộc mặc định là Stacks
+  defaultNetwork: stacks, // BẮT BUỘC: Ép người dùng vào Stacks
   metadata,
   features: {
     analytics: true

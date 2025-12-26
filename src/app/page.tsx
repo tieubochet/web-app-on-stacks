@@ -1,10 +1,13 @@
 'use client'
 
-import { useAppKitAccount } from "@reown/appkit/react";
+import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { useEffect, useState } from "react";
+// Import để dùng hàm disconnect
+import { useDisconnect } from "@reown/appkit/react"; 
 
 export default function Home() {
   const { address, isConnected } = useAppKitAccount();
+  const { disconnect } = useDisconnect(); // Hook ngắt kết nối
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -30,6 +33,14 @@ export default function Home() {
              <appkit-button />
           </div>
 
+          {/* NÚT CỨU HỘ: Dùng để xóa trạng thái lỗi */}
+          <button 
+            onClick={() => disconnect()}
+            className="text-xs text-red-400 underline hover:text-red-300"
+          >
+            Gặp lỗi? Nhấn vào đây để Reset kết nối
+          </button>
+
           <div className="w-full border-t border-gray-700 pt-6">
              <div className="flex justify-between items-center mb-4">
                <span className="text-gray-400">Status:</span>
@@ -45,13 +56,6 @@ export default function Home() {
                    <div className="bg-purple-900/30 p-3 rounded-lg border border-purple-500/50 font-mono text-sm sm:text-lg break-all text-purple-300 mt-2">
                      {address}
                    </div>
-                   
-                   {/* Nếu vẫn hiện địa chỉ Bitcoin (bc1) thì hiện cảnh báo */}
-                   {!address.startsWith('SP') && !address.startsWith('SM') && (
-                      <p className="text-red-400 text-xs mt-2">
-                        Lỗi: Vẫn đang hiển thị địa chỉ Bitcoin. Hãy ngắt kết nối trong ví Leather và thử lại.
-                      </p>
-                   )}
                  </div>
                </div>
              )}

@@ -1,7 +1,6 @@
-// src/config/index.tsx
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-// TUYỆT ĐỐI KHÔNG import { bitcoin } từ networks
-import type { AppKitNetwork } from '@reown/appkit/networks'
+// QUAN TRỌNG: Phải import cả bitcoin
+import { bitcoin, type AppKitNetwork } from '@reown/appkit/networks'
 
 // Định nghĩa mạng Stacks
 export const stacks: AppKitNetwork = {
@@ -13,13 +12,20 @@ export const stacks: AppKitNetwork = {
   explorerUrl: 'https://explorer.hiro.so',
   rpcUrl: 'https://stacks-node-api.mainnet.stacks.co',
   chainNamespace: 'stacks',
-  nativeCurrency: { name: 'Stacks', symbol: 'STX', decimals: 6 },
+  nativeCurrency: {
+    name: 'Stacks',
+    symbol: 'STX',
+    decimals: 6,
+  },
 }
 
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID || 'your-id'
+export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+if (!projectId) {
+  throw new Error('Project ID is not defined')
+}
 
-// Danh sách networks chỉ được chứa [stacks]
-export const networks = [stacks]
+// QUAN TRỌNG: Để stacks đứng trước, nhưng PHẢI CÓ bitcoin đi kèm
+export const networks = [stacks, bitcoin]
 
 export const bitcoinAdapter = new BitcoinAdapter({
   projectId,
