@@ -17,7 +17,7 @@
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/tieubochet/web-app-on-stacks.git
     cd <your-project-folder>
     ```
 
@@ -62,6 +62,3 @@ This project is optimized for deployment on **Vercel**.
 ## 🤝 Contribution
 
 Feel free to fork this repo and submit pull requests.
-
----
-*Built for the Talent App Challenge.*
