@@ -1,10 +1,10 @@
 import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
-import { bitcoin } from '@reown/appkit/networks' // Import mạng bitcoin có sẵn
+import { bitcoin } from '@reown/appkit/networks'
 import type { AppKitNetwork } from '@reown/appkit/networks'
 
-// Định nghĩa Stacks thủ công
+// 1. Định nghĩa mạng Stacks
 export const stacks: AppKitNetwork = {
-  id: 'stacks:1',
+  id: 'stacks:1', // CAIP-2 ID
   chainId: '1',
   caipNetworkId: 'stacks:1',
   name: 'Stacks',
@@ -24,7 +24,7 @@ if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-// FIX: Thêm 'bitcoin' vào đây để Adapter khởi tạo đúng kênh kết nối với Leather
+// 2. Xuất networks (Để Stacks lên đầu tiên để ưu tiên)
 export const networks = [stacks, bitcoin]
 
 export const bitcoinAdapter = new BitcoinAdapter({
