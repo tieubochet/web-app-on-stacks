@@ -8,32 +8,27 @@ if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-// Metadata
 const metadata = {
   name: 'Talent Challenge Stacks',
-  description: 'AppKit Bitcoin/Stacks Integration',
-  url: 'https://example.com',
+  description: 'AppKit Stacks Integration',
+  url: 'https://example.com', 
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
 
-// Khởi tạo AppKit với Bitcoin Adapter
+// Khởi tạo AppKit
 createAppKit({
   adapters: [bitcoinAdapter],
   projectId,
-  networks,
+  networks, // Danh sách này giờ chỉ chứa Stacks
+  defaultNetwork: networks[0], // Mặc định chọn Stacks
   metadata,
   features: {
     analytics: true
   }
 })
 
-// Với Bitcoin Adapter, ta không cần bọc WagmiProvider hay QueryClientProvider
-function ContextProvider({ children }: { children: ReactNode; cookies?: string | null }) {
-  return (
-    <>
-      {children}
-    </>
-  )
+function ContextProvider({ children }: { children: ReactNode }) {
+  return <>{children}</>
 }
 
 export default ContextProvider
