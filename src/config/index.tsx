@@ -1,24 +1,17 @@
-import { cookieStorage, createStorage, http } from 'wagmi'
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { BitcoinAdapter } from '@reown/appkit-adapter-bitcoin'
+import { bitcoin, bitcoinTestnet } from '@reown/appkit/networks'
 
-// Lấy Project ID từ biến môi trường
+// 1. Lấy Project ID
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-
 if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-export const networks = [mainnet, arbitrum]
+// 2. Định nghĩa mạng Bitcoin
+export const networks = [bitcoin, bitcoinTestnet]
 
-// Thiết lập Wagmi Adapter
-export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({
-    storage: cookieStorage
-  }),
-  ssr: true,
+// 3. Khởi tạo Bitcoin Adapter
+export const bitcoinAdapter = new BitcoinAdapter({
   projectId,
   networks
 })
-
-export const config = wagmiAdapter.wagmiConfig

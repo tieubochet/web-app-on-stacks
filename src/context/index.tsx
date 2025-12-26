@@ -1,45 +1,38 @@
 'use client'
 
-import { wagmiAdapter, projectId } from '@/config'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { bitcoinAdapter, projectId, networks } from '@/config'
 import { createAppKit } from '@reown/appkit/react'
-import { mainnet, arbitrum } from '@reown/appkit/networks'
 import React, { type ReactNode } from 'react'
-import { cookieToInitialState, WagmiProvider, type Config } from 'wagmi'
-
-const queryClient = new QueryClient()
 
 if (!projectId) {
   throw new Error('Project ID is not defined')
 }
 
-// Metadata hiển thị trên ví khi kết nối
+// Metadata
 const metadata = {
-  name: 'Talent Challenge Week 3',
-  description: 'AppKit Example for Challenge',
-  url: 'https://example.com', 
+  name: 'Talent Challenge Stacks',
+  description: 'AppKit Bitcoin/Stacks Integration',
+  url: 'https://example.com',
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
 
-// Khởi tạo AppKit Modal
+// Khởi tạo AppKit với Bitcoin Adapter
 createAppKit({
-  adapters: [wagmiAdapter],
+  adapters: [bitcoinAdapter],
   projectId,
-  networks: [mainnet, arbitrum],
-  defaultNetwork: mainnet,
-  metadata: metadata,
+  networks,
+  metadata,
   features: {
-    analytics: true 
+    analytics: true
   }
 })
 
-function ContextProvider({ children, cookies }: { children: ReactNode; cookies: string | null }) {
-  const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig as Config, cookies)
-
+// Với Bitcoin Adapter, ta không cần bọc WagmiProvider hay QueryClientProvider
+function ContextProvider({ children }: { children: ReactNode; cookies?: string | null }) {
   return (
-    <WagmiProvider config={wagmiAdapter.wagmiConfig as Config} initialState={initialState}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </WagmiProvider>
+    <>
+      {children}
+    </>
   )
 }
 

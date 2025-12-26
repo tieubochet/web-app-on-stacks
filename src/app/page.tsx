@@ -1,13 +1,12 @@
 'use client'
 
-import { useAppKitAccount } from "@reown/appkit/react";
+import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const { address, isConnected } = useAppKitAccount();
   const [mounted, setMounted] = useState(false);
 
-  // Fix lỗi hydration mismatch (chỉ render sau khi client load xong)
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -19,16 +18,16 @@ export default function Home() {
       <div className="z-10 w-full max-w-lg items-center justify-between text-sm flex flex-col gap-10">
         
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 mb-2">
+          <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-600 mb-2">
             Talent Challenge
           </h1>
-          <p className="text-gray-400">Week 3: Reown AppKit Integration</p>
+          <p className="text-gray-400">Week 3: Bitcoin & Stacks (Leather)</p>
         </div>
         
         <div className="bg-gray-800 p-8 rounded-2xl shadow-2xl border border-gray-700 w-full flex flex-col items-center gap-8">
           
-          {/* Nút kết nối ví chính chủ từ Reown */}
           <div className="scale-110">
+             {/* Nút Connect này sẽ tự hiện icon ví Leather nếu extension đã cài */}
              <appkit-button />
           </div>
 
@@ -42,8 +41,8 @@ export default function Home() {
              
              {isConnected && address && (
                <div className="flex flex-col gap-2">
-                 <span className="text-gray-400 text-xs uppercase tracking-wider">Connected Address:</span>
-                 <div className="bg-gray-950 p-3 rounded-lg border border-gray-600 font-mono text-xs sm:text-sm break-all text-blue-300">
+                 <span className="text-gray-400 text-xs uppercase tracking-wider">Bitcoin Address:</span>
+                 <div className="bg-gray-950 p-3 rounded-lg border border-gray-600 font-mono text-xs sm:text-sm break-all text-orange-300">
                    {address}
                  </div>
                </div>
@@ -52,7 +51,7 @@ export default function Home() {
         </div>
         
         <div className="text-center text-gray-600 text-xs">
-          Built with Next.js & Reown AppKit
+          Supports Leather, Xverse, Unisat via Reown AppKit
         </div>
 
       </div>
