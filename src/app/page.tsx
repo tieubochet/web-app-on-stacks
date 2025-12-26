@@ -1,30 +1,15 @@
 'use client'
 
-import { useAppKit, useAppKitAccount, useAppKitNetwork } from "@reown/appkit/react";
+import { useAppKitAccount } from "@reown/appkit/react";
 import { useEffect, useState } from "react";
-// Import mạng stacks từ file config để dùng cho hàm switchNetwork
-import { stacks } from "@/config"; 
 
 export default function Home() {
   const { address, isConnected } = useAppKitAccount();
-  const { caipNetwork, switchNetwork } = useAppKitNetwork(); // Hook để xử lý mạng
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Hàm kiểm tra xem có đúng là địa chỉ Stacks không (Bắt đầu bằng SP hoặc SM)
-  const isStacksAddress = address && (address.startsWith('SP') || address.startsWith('SM'));
-
-  // Hàm xử lý chuyển mạng
-  const handleSwitchToStacks = async () => {
-    try {
-      await switchNetwork(stacks);
-    } catch (error) {
-      console.error("Failed to switch network:", error);
-    }
-  };
 
   if (!mounted) return <div className="min-h-screen bg-gray-900"></div>;
 
@@ -53,38 +38,20 @@ export default function Home() {
                </span>
              </div>
              
-             {/* Logic hiển thị địa chỉ */}
              {isConnected && address && (
                <div className="flex flex-col gap-4">
-                 
-                 {/* Trường hợp 1: Đã đúng địa chỉ Stacks */}
-                 {isStacksAddress ? (
-                   <div>
-                     <span className="text-gray-400 text-xs uppercase tracking-wider">Your Stacks Address:</span>
-                     <div className="bg-purple-900/30 p-3 rounded-lg border border-purple-500/50 font-mono text-lg break-all text-purple-300 mt-2 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
-                       {address}
-                     </div>
+                 <div>
+                   <span className="text-gray-400 text-xs uppercase tracking-wider">Stacks Address (STX):</span>
+                   <div className="bg-purple-900/30 p-3 rounded-lg border border-purple-500/50 font-mono text-sm sm:text-lg break-all text-purple-300 mt-2">
+                     {address}
                    </div>
-                 ) : (
-                   /* Trường hợp 2: Đang hiện địa chỉ Bitcoin -> Hiện nút bắt đổi mạng */
-                   <div className="bg-yellow-900/20 border border-yellow-600/50 p-4 rounded-lg text-center">
-                     <p className="text-yellow-500 mb-2 font-semibold">⚠️ Wrong Network Detected</p>
-                     <p className="text-gray-400 text-xs mb-3">
-                       You are connected to Bitcoin ({address.slice(0, 6)}...). <br/>
-                       Please switch to Stacks to see your STX address.
-                     </p>
-                     <button 
-                        onClick={handleSwitchToStacks}
-                        className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition-all w-full"
-                     >
-                        Switch to Stacks Network
-                     </button>
-                   </div>
-                 )}
-
-                 {/* Debug Info (Có thể xóa sau) */}
-                 <div className="mt-4 text-[10px] text-gray-600 font-mono">
-                   Network: {caipNetwork?.name || 'Unknown'}
+                   
+                   {/* Nếu vẫn hiện địa chỉ Bitcoin (bc1) thì hiện cảnh báo */}
+                   {!address.startsWith('SP') && !address.startsWith('SM') && (
+                      <p className="text-red-400 text-xs mt-2">
+                        Lỗi: Vẫn đang hiển thị địa chỉ Bitcoin. Hãy ngắt kết nối trong ví Leather và thử lại.
+                      </p>
+                   )}
                  </div>
                </div>
              )}
